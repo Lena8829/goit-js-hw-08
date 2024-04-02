@@ -1,3 +1,8 @@
+/**
+ *Створи галерею з можливістю кліку по її елементах і перегляду повнорозмірного зображення в модальному вікні.
+ *
+ */
+
 const images = [
   {
     preview:
@@ -63,3 +68,54 @@ const images = [
     description: "Lighthouse Coast Sea",
   },
 ];
+
+const gallery = document.querySelector(".gallery");
+
+//creating gallery (відмальов.розмітку)
+const galleryList = (arr) =>
+  arr
+    .map(
+      (image) => `<li class="gallery-item">
+  <a class="gallery-link" href="${image.original}">
+    <img
+      class="gallery-image"
+      src="${image.preview}"
+      data-source="${image.original}"
+      alt="${image.description}"
+    />
+  </a>
+</li>
+`
+    )
+    .join("");
+
+gallery.insertAdjacentHTML("afterbegin", galleryList(images)); // adding gallery to html
+
+gallery.addEventListener("click", handleClick);
+
+function handleClick(e) {
+  e.preventDefault(); // prevent from loading image
+
+  //checking if click was on image
+  if (e.target === e.currentTarget) {
+    return;
+  }
+  //or
+  // if (e.target.nodeName !== "IMG") return;
+
+  const bigImg = e.target.dataset.source; //getting data-atrib.of original (big) image
+  const imgDescr = e.target.alt; //getting image description
+
+  //link to big img
+  console.log(bigImg);
+  console.log(imgDescr);
+
+  //creating modal window with basicLightbox
+  const instance = basicLightbox.create(`
+    <div class="modal">
+   <img src="${bigImg}" alt="${imgDescr}"/>
+    </div>
+`);
+
+  instance.show();
+}
