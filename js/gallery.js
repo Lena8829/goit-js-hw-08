@@ -89,6 +89,25 @@ const galleryList = (arr) =>
     )
     .join("");
 
+//**або деструкт-ція */
+
+// const galleryList = (arr) =>
+//   arr
+//     .map(
+//       ({ preview, original, description }) => `<li class="gallery-item">
+//   <a class="gallery-link" href="${original}">
+//     <img
+//       class="gallery-image"
+//       src="${preview}"
+//       data-source="${original}"
+//       alt="${description}"
+//     />
+//   </a>
+// </li>
+// `
+//     )
+//     .join("");
+
 gallery.insertAdjacentHTML("afterbegin", galleryList(images)); // adding gallery to html
 
 gallery.addEventListener("click", handleClick);
